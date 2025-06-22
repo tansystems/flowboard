@@ -1,0 +1,160 @@
+basePath: /
+definitions:
+  models.Customer:
+    properties:
+      company:
+        type: string
+      created_at:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+      updated_at:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Мини-CRM/ERP для малого бизнеса
+  title: CRM API
+  version: "1.0"
+paths:
+  /customers:
+    get:
+      description: Возвращает всех клиентов
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Customer'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить список клиентов
+      tags:
+      - customers
+    post:
+      consumes:
+      - application/json
+      description: Создаёт нового клиента
+      parameters:
+      - description: Данные клиента
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Customer'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Создать клиента
+      tags:
+      - customers
+  /customers/{id}:
+    delete:
+      description: Удаляет клиента по ID
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Удалить клиента
+      tags:
+      - customers
+    get:
+      description: Возвращает клиента по идентификатору
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Customer'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить клиента по ID
+      tags:
+      - customers
+    put:
+      consumes:
+      - application/json
+      description: Обновляет данные клиента по ID
+      parameters:
+      - description: ID клиента
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные клиента
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Customer'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Обновить клиента
+      tags:
+      - customers
+swagger: "2.0"
